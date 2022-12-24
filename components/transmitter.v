@@ -2,7 +2,7 @@ module Transmitter
 #( parameter DBit=8,SBit=16//to make 1 stop bit 
 )
 (
-input clk,rst,tx_start,s_tick,
+input tx_start,s_tick,
 input [7:0]din,
 output reg tx_done_tick,dout
 );
@@ -18,6 +18,7 @@ begin
     tickCounter<=0;
     dout<=1;
     data<=0;
+    tx_done_tick<=0;
   end
   
 always @(posedge s_tick,posedge tx_start)//as it start only in tx_start and s_tick
@@ -75,10 +76,9 @@ always @(posedge s_tick,posedge tx_start)//as it start only in tx_start and s_ti
                 begin
                     tx_done_tick<=1;
                     state<=IDLE;
+                    dout<=1;
                 end
           end
     endcase
     
 endmodule
-  
-
