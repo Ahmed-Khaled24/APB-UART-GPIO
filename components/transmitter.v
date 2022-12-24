@@ -82,3 +82,4 @@ always @(posedge s_tick,posedge tx_start)//as it start only in tx_start and s_ti
     endcase
     
 endmodule
+
