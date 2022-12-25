@@ -1,5 +1,5 @@
 `include "components/fifo.v"
-`timescale 100ms/100ms
+`timescale 1ns/1ns
 
 module fifo_tb;
     reg [7:0] dataIn;
@@ -12,8 +12,8 @@ module fifo_tb;
     fifo f1 (
         .clk(clk),
         .reset(reset),
-        .Empty(Empty),
-        .Full(Full),
+        .EMPTY(Empty),
+        .FULL(Full),
         .writeEn(writeEn),
         .readEn(readEn),
         .dataIn(dataIn),
