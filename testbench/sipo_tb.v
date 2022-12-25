@@ -1,3 +1,5 @@
+`include "components/sipo.v"
+
 module sipo_tb;
   reg clk;
   reg rst;
@@ -19,4 +21,3 @@ module sipo_tb;
   end
   always #2 DataIn=~DataIn;
 endmodule
-

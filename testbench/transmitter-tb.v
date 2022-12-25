@@ -1,16 +1,24 @@
-`timescale 1ps/1ps
+`include "components/baud-rate-generator.v"
+`include "components/transmitter.v"
+
+`timescale 1ns/1ns
 module transmitter_tb;
 
-reg [7:0] din=7'b01010101;
+reg [7:0] din=8'b01010101;
 wire tx_done_tick;
 reg clk = 0,
     s_tick = 0,
     tx_start = 0;
 wire dout=1;
 
-Transmitter#(8,8)t1 (
+baud_gen br1 (
+    .clk(clk),
+    .divsr(11'd650)
+);
+
+Transmitter#(8,16)t1 (
     .tx_start(tx_start),
-    .s_tick(s_tick),
+    .s_tick(br1.tick),
     .din(din),
     .tx_done_tick(tx_done_tick),
     .dout(dout)
@@ -21,7 +29,5 @@ begin
   tx_start=1;
 end
 
-always #50 s_tick = ~s_tick;
+always #5 clk = ~clk;
 endmodule  
-
-

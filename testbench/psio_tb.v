@@ -1,3 +1,5 @@
+`include "components/piso.v"
+
 module piso_tb;
   reg clk;
   reg control;
