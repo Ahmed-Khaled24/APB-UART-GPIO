@@ -1,4 +1,3 @@
-`include "components/baud-rate-generator.v"
 `timescale 1ns/1ns
 module baud_gen_tb;
   reg clk;
@@ -8,20 +7,17 @@ module baud_gen_tb;
   baud_gen gen(clk,rst,divsr,tick);
   initial
   begin
-    $dumpfile("baud_gen.vcd");
-    $dumpvars(0, gen);
     clk=0;
-    divsr=16'd65;
-    rst=0;
-    #100
+    divsr=11'd650;
     rst=1;
+    #1
+    rst=0;
     end
   always
   begin
-    #50
-    clk<=~clk;
+    #5
+    clk=~clk;
   end
 endmodule
-
 
 
