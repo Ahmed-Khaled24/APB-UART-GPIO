@@ -9,8 +9,8 @@ module fifo (dataIn, readEn, writeEn, Full, Empty, dataOut, clk, reset);
     output Empty, Full;
     // Internals
     reg [7:0] buffer [7:0];
-    reg [2:0] counter = 0;
-    reg [2:0] readCoutner = 0, writeCounter = 0;
+    reg [3:0] counter = 0;
+    reg [3:0] readCoutner = 0, writeCounter = 0;
 
     assign Full = (counter == 8 ? 1 : 0);
     assign Empty = (counter == 0 ? 1 : 0);
@@ -23,12 +23,18 @@ module fifo (dataIn, readEn, writeEn, Full, Empty, dataOut, clk, reset);
         end 
         else if (readEn == 1 && !Empty) begin
             dataOut = buffer[readCoutner];
-            readCoutner++;
+            readCoutner = readCoutner + 1;
         end
         else if (writeEn == 1 && !Full) begin
             buffer[writeCounter] = dataIn;
-            writeCounter++;
+            writeCounter = writeCounter + 1;
         end 
+
+        // Update the counter
+        if(readCoutner > writeCounter) 
+            counter = readCoutner - writeCounter;
+        if(readCoutner < writeCounter) 
+            counter = writeCounter - readCoutner; 
 
         // Reset counters
         if(writeCounter == 8) 
@@ -37,12 +43,6 @@ module fifo (dataIn, readEn, writeEn, Full, Empty, dataOut, clk, reset);
         if(readCoutner == 8) 
             readCoutner = 0;
 
-        // Update the counter
-        if(readCoutner > writeCounter) 
-            counter = readCoutner - writeCounter;
-
-        if(writeCounter > readCoutner) 
-            counter = writeCounter - readCoutner;
      
     end
 

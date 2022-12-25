@@ -10,7 +10,7 @@ module baud_gen(
     count=0;
   else
     begin
-    if(count==divsr)
+    if(count==divsr+1)
       begin
         count=0;
         tick=~tick;

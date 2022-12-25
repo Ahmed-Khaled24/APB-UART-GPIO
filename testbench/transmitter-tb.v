@@ -25,7 +25,9 @@ Transmitter#(8,16)t1 (
 );
 initial
 begin 
-  #100
+$dumpfile("trasmitter.vcd");
+$dumpvars(0, transmitter_tb);
+  #10
   tx_start=1;
 end
 
