@@ -164,8 +164,6 @@ initial begin
     #104166
     rx = 1; // stop bit
 
-    readEn = 1;
-
     
 end
 
