@@ -1,3 +1,4 @@
+`timescale 1ns/1ns
 module baud_gen_tb;
   reg clk;
   reg rst;
@@ -9,13 +10,13 @@ module baud_gen_tb;
     clk=0;
     divsr=11'd650;
     rst=0;
-    #2
+    #1
     rst=1;
     end
   always
   begin
-    #1
-    clk<=~clk;
+    #5
+    clk=~clk;
   end
 endmodule
 
