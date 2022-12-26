@@ -81,9 +81,6 @@ always @(posedge s_tick)//as it start only in tx_start and s_tick
                 begin
                     state<=IDLE;
                     tx_dataOut <= 1;
-                    tx_done_tick <= 1;
-                    #15
-                    tx_done_tick <= 0;
                 end
           end
     endcase
