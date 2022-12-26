@@ -1,6 +1,6 @@
-`include "components/receiver.v"
-`include "components/baud-rate-generator.v"
-`include "components/fifo.v"
+`include "components/UART/receiver.v"
+`include "components/UART/baud-rate-generator.v"
+`include "components/UART/fifo.v"
 `timescale 1ns/1ns
 module receiver_tb;
 

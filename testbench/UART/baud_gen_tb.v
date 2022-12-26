@@ -1,4 +1,4 @@
-`include "components/baud-rate-generator.v"
+`include "components/UART/baud-rate-generator.v"
 
 `timescale 1ns/1ns
 module baud_gen_tb;

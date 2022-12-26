@@ -1,7 +1,7 @@
  
-`include "components/baud-rate-generator.v"
-`include "components/fifo.v"
-`include "components/transmitter.v"
+`include "components/UART/baud-rate-generator.v"
+`include "components/UART/fifo.v"
+`include "components/UART/transmitter.v"
 
 `timescale 1ns/1ns
 module transmitter_tb;

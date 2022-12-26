@@ -1,4 +1,4 @@
-`include "components/piso.v"
+`include "components/UART/piso.v"
 
 module piso_tb;
   reg clk;

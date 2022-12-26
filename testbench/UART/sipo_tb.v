@@ -1,4 +1,4 @@
-`include "components/sipo.v"
+`include "components/UART/sipo.v"
 
 module sipo_tb;
   reg clk;

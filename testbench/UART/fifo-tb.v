@@ -1,4 +1,4 @@
-`include "components/fifo.v"
+`include "components/UART/fifo.v"
 `timescale 1ns/1ns
 
 module fifo_tb;
