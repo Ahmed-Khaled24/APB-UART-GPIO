@@ -1,5 +1,5 @@
 `include "components/fifo.v"
-`timescale 100ms/100ms
+`timescale 1ns/1ns
 
 module fifo_tb;
     reg [7:0] dataIn;
@@ -12,8 +12,8 @@ module fifo_tb;
     fifo f1 (
         .clk(clk),
         .reset(reset),
-        .Empty(Empty),
-        .Full(Full),
+        .EMPTY(Empty),
+        .FULL(Full),
         .writeEn(writeEn),
         .readEn(readEn),
         .dataIn(dataIn),
@@ -22,21 +22,30 @@ module fifo_tb;
     
     initial begin
         $dumpfile("fifo.vcd");
-        $dumpvars(0, fifo_tb);
-        #10
-        reset = 1;
-        #10
-        reset = 0;
-        #10
-        dataIn = 8'd255;
+        $dumpvars(0, f1);
+ 
         writeEn = 1;
+        dataIn = 8'd255;
         #10
         dataIn = 8'd165;
         #10
         dataIn = 8'd109;
         #10
+        dataIn = 8'd165;
+        #10
+        dataIn = 8'd109;
+        #10
+        dataIn = 8'd255;
+        #10
+        dataIn = 8'd165;
+        #10
+        dataIn = 8'd109;
+        #10
+        dataIn = 8'd255;
+
         writeEn = 0;
         readEn = 1;
+
     end 
 
     always #5 clk = ~clk;

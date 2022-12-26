@@ -1,3 +1,5 @@
+`include "components/baud-rate-generator.v"
+
 `timescale 1ns/1ns
 module baud_gen_tb;
   reg clk;
@@ -12,6 +14,8 @@ module baud_gen_tb;
     rst=0;
     #1
     rst=1;
+    #1
+    rst=0;
     end
   always
   begin
@@ -19,6 +23,5 @@ module baud_gen_tb;
     clk=~clk;
   end
 endmodule
-
 
 

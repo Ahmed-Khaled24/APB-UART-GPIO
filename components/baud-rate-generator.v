@@ -4,9 +4,9 @@ module baud_gen(
   output reg tick
   );
   reg [10:0] count=11'b0;
-  always@(posedge clk,negedge reset)
+  always@(posedge clk,posedge reset)
   begin
-  if(!reset)
+  if(reset)
     count=0;
   else
     begin
@@ -23,3 +23,4 @@ module baud_gen(
     end
   end
 endmodule
+

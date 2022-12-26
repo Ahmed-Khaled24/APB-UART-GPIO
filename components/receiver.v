@@ -1,3 +1,5 @@
+`timescale 1ns/1ns
+
 module receiver(rx, s_tick, rx_dataOut, rx_doneTick, clk);
 parameter numberOfDataBits = 8;
 parameter stopBitTicks = 16;
@@ -63,6 +65,10 @@ always @(posedge s_tick) begin
             if(tickCounter == stopBitTicks-1) begin
                 rx_dataOut = recieverBuffer;
                 rx_doneTick = 1;
+                #15
+                rx_doneTick = 0;
+                state = 2'b00;
+
             end
             else begin
                 tickCounter = tickCounter + 1;
