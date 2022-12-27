@@ -8,7 +8,7 @@ module UART_APB_interface(
     input PSELx,
     input PWRITE,
     input PENABLE,
-    output [31:0] PRDATA, 
+    output reg [31:0] PRDATA, 
     output reg PREADY,
     // UART side
     input [7:0] rx_fifo_dataOut, 
@@ -20,18 +20,18 @@ module UART_APB_interface(
     output [7:0] tx_fifo_dataIn,  
     output reg reset
 );
-localparam cycleDuration = 10;
+localparam cycleDuration = 15;
 
 assign tx_fifo_dataIn = PWDATA[7:0];
 assign rx_fifo_dataOut = PRDATA[7:0];
 
 always @(posedge PCLK, posedge PRESETn) begin
-    if(PRESETn) begin
+    if(PSELx && PRESETn) begin
         reset = 1;
         #cycleDuration
         reset = 0;
     end
-    else if(PSELx == 1 && PENABLE == 1) begin
+    else if(PSELx && PENABLE) begin
         case(PWRITE) 
             1: begin // write operation to the tx FIFO
                 /* 
@@ -57,7 +57,7 @@ always @(posedge PCLK, posedge PRESETn) begin
             end
         endcase
     end
-    else if (PENABLE == 0) begin
+    else if (!PENABLE) begin
         PREADY = 0;
     end
 end
