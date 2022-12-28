@@ -29,7 +29,7 @@ always @(posedge s_tick)//as it start only in tx_start and s_tick
             if(tx_start==1) // fifo is not empty
               begin
                 tx_done_tick <= 1;
-                #10
+                #15
                 tx_done_tick <= 0;
                 state<=Start;
                 tickCounter<=0;
