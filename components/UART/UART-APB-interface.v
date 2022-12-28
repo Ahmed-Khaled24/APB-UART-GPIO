@@ -8,27 +8,28 @@ module UART_APB_interface(
     input PSELx,
     input PWRITE,
     input PENABLE,
-    output reg [31:0] PRDATA, 
-    output reg PREADY,
+    output [31:0] PRDATA, 
+    output reg PREADY = 0,
     // UART side
     input [7:0] rx_fifo_dataOut, 
     input rx_fifo_Full,
     input rx_fifo_Empty,
     input tx_fifo_Full,
-    output reg tx_fifo_writeEn, 
-    output reg rx_fifo_readEn,  
+    output reg tx_fifo_writeEn = 0, 
+    output reg rx_fifo_readEn = 0,  
     output [7:0] tx_fifo_dataIn,  
-    output reg reset
+    output reg reset = 0
 );
-localparam cycleDuration = 15;
+localparam holdDuration = 15;
 
-assign tx_fifo_dataIn = PWDATA[7:0];
-assign rx_fifo_dataOut = PRDATA[7:0];
+
+assign tx_fifo_dataIn = PWDATA;
+assign PRDATA [7:0] = rx_fifo_dataOut;
 
 always @(posedge PCLK, posedge PRESETn) begin
     if(PSELx && PRESETn) begin
         reset = 1;
-        #cycleDuration
+        #holdDuration
         reset = 0;
     end
     else if(PSELx && PENABLE) begin
@@ -40,7 +41,7 @@ always @(posedge PCLK, posedge PRESETn) begin
                 */ 
                 PREADY = ~tx_fifo_Full;
                 tx_fifo_writeEn = 1;
-                #cycleDuration
+                #holdDuration
                 tx_fifo_writeEn = 0;
             end
             0: begin // read from rx FIFO
@@ -52,12 +53,12 @@ always @(posedge PCLK, posedge PRESETn) begin
             */
                 PREADY = ~rx_fifo_Empty;
                 rx_fifo_readEn = 1;
-                #cycleDuration
+                #holdDuration
                 rx_fifo_readEn = 0;
             end
         endcase
     end
-    else if (!PENABLE) begin
+    else begin
         PREADY = 0;
     end
 end

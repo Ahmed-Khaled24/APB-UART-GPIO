@@ -30,24 +30,41 @@ UART_APB u (
 initial begin
     $dumpfile("uart_apb.vcd");
     $dumpvars(0, u);
-    // write operation tx not full
+
     PENABLE <= 1;
+
+
     PSELx <= 1;
-    PWRITE <= 1;
-    PWDATA <= 8'b10101010;
-    #10
-    PENABLE <= 0;
+    PWRITE <= 0;
 
-    #20
+    // read operation rx fifo not empty
+    rx = 0; // start bit
+    #104166
+    rx = 1;
+    #104166
+    rx = 0;
+    #104166
+    rx = 1;
+    #104166
+    rx = 0;
+    #104166
+    rx = 1;
+    #104166
+    rx = 0;
+    #104166
+    rx = 1;
+    #104166
+    rx = 0;
+    #104166
+    rx = 1; // stop bit
+    #104166
+    PSELx <= 0;
+    #104166
 
-    // write operation tx full 
-    PENABLE <= 1;
+
     PSELx <= 1;
-    PWRITE <= 1;
-    PWDATA <= 8'b00110011;
-    #10
-    PENABLE <= 0;
-
+    PWDATA <= 8'b01010101;
+    PWRITE <=1 ;
 end
 
 always #5 PCLK = ~ PCLK;

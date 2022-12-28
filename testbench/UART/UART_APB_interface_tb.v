@@ -63,7 +63,6 @@ initial begin
     #10
     PENABLE <= 0;
 
-
     #20
 
     // read operation rx fifo not empty

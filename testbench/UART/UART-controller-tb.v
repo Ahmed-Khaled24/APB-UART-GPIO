@@ -89,7 +89,7 @@ initial begin
 
     // receiver
     #104166
-    rx = 0;
+    rx = 0; // start bit
     for (integer i  = 0 ; i < 4 ; i ++) begin
         #104166
         rx = 1;
@@ -100,9 +100,11 @@ initial begin
     end
     #104166
     rx = 1;
+
     // ****
+
     #104166
-    rx = 0;
+    rx = 0; // start bit
     for (integer i  = 0 ; i < 4 ; i ++) begin
         #104166
         rx = 0;
@@ -114,9 +116,16 @@ initial begin
     #104166
     rx = 1;
 
-   
+
+    // read the received data
+    #104166
     rx_fifo_readEn = 1;
-    #10;
+    #10
+    rx_fifo_readEn = 0;
+    #104166
+    #104166
+    rx_fifo_readEn = 1;
+    #10
     rx_fifo_readEn = 0;
 
 end

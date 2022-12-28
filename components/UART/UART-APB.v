@@ -20,7 +20,7 @@ UART uart (
     .tx_fifo_writeEn(interface.tx_fifo_writeEn),
     .rx_fifo_readEn(interface.rx_fifo_readEn),
     .tx_fifo_Full(interface.tx_fifo_Full),
-    .reset(interface.PRESETn),
+    .reset(interface.reset),
     .clk(PCLK),
     .baud_final_value(11'd650),
     .rx(rx),
@@ -37,11 +37,9 @@ UART_APB_interface interface (
     .PREADY(PREADY),
     .PCLK(PCLK),
     .PRESETn(PRESETn),
-    .rx_fifo_dataOut(uart.rx_fifo_dataOut),
     .rx_fifo_Empty(uart.rx_fifo_Empty),
-    .tx_fifo_Full(uart.tx_fifo_Full)
+    .rx_fifo_dataOut(uart.rx_fifo_dataOut)
 );
-  
 
 
 endmodule
