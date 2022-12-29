@@ -1,4 +1,4 @@
-`include "APB_Protocol.v"
+`include "components/APB/APB_Protocol.v"
 
 `timescale 1ns/1ns
 

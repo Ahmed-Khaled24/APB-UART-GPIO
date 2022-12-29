@@ -1,8 +1,6 @@
-`include "APB_bus.v"
-`include "gpio.v"
+`include "components/APB/APB_bus.v"
+`include "components/GPIO/gpio.v"
 `include "components/UART/UART-APB.v"
-
-
 
 // `timescale 1ns/1ns
 
