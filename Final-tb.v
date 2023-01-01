@@ -41,33 +41,20 @@ module APB_Protocol_tb;
         // Deassert the reset signal
         // Reset = 1'b0;
         // Wait for the APB protocol module to stabilize
-        #10;
-        // Select the first slave peripheral
+        #30;
+        
+    
+        // ++++++++++++++++++++++++++++++++ GPIO ++++++++++++++++++++++++++++++++
         Psel = 2'b01;
         transfer = 1'b1;
-        // Wait for the APB protocol module to stabilize
-        #30;
         // Write a value to the slave peripheral's memory
         penable = 1'b1;
         pwrite = 1'b1;
         write_paddr = 1'b1;
         write_data = 32'hABCD1234;
-        #10
-        penable = 1'b0;
+        #30 
 
-        // Select the second slave peripheral UART
-        Psel = 2'b10;
-        transfer = 1'b1;
-        // Wait for the APB protocol module to stabilize
-        #30;
-        // send byte using uart transmitter
-        penable = 1'b1;
-        write_data[7:0] = 8'b10101010;
-        pwrite = 1'b1;
-        #10
-        
         // Read a value from the slave peripheral's memory
-        // penable = 1'b1;
         pwrite = 1'b0;
         apb_read_paddr = 1'b1;
         #30; 
@@ -79,11 +66,43 @@ module APB_Protocol_tb;
         apb_read_paddr = 2'b10;
         #30;
         Psel = 1'b0;
-         #10
-        // Check the output value
+        #30
+        penable = 1'b0;
 
-        // receive 
+    
+        // ++++++++++++++++++++++++++++++++ UART test ++++++++++++++++++++++++++++++++
         Psel = 2'b10;
+        transfer = 1'b1;
+        #10;
+    
+        // Trasmitter
+        // push 8 elemnts in tx_fifo, in the next push 
+        // fifo is full then PREADY remains 0 till timeout
+        pwrite = 1'b1;
+        for(integer i = 0 ; i < 10 ; i++) begin
+            #10
+            write_data = $urandom % 256; // unsinged random number between 0 and 255
+            penable = 1'b1;
+            #10
+            penable = 1'b0;
+        end
+
+        #100
+
+        // Receiver 
+
+        // try to read from rx_fifo while it is empty 
+        // PREADY remains 0 till timeout
+        penable = 1;
+        pwrite = 0;
+        #13
+        penable = 0;
+
+        #30
+
+        // receive data then try to read from rx_fifo 
+        // PREADY is 1 while rx_fifo is not empty
+        // first byte
         rx = 0; // start bit
         #104166
         rx = 1;
@@ -105,7 +124,40 @@ module APB_Protocol_tb;
         rx = 1; // stop bit
         #104166
         pwrite = 1'b0;
-        #10
+
+        // second byte
+        rx = 0; // start bit
+        #104166
+        rx = 0;
+        #104166
+        rx = 0;
+        #104166
+        rx = 1;
+        #104166
+        rx = 1;
+        #104166
+        rx = 0;
+        #104166
+        rx = 0;
+        #104166
+        rx = 1;
+        #104166
+        rx = 1;
+        #104166
+        rx = 1; // stop bit
+        #104166
+
+        pwrite = 1'b0;
+        penable = 1'b1;
+        #13
+        penable = 1'b0;
+        #100
+        penable = 1'b1;
+        #13
+        penable = 1'b0;
+        #100
+        penable = 1'b1;
+        #13
         penable = 1'b0;
     end
 

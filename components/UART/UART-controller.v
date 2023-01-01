@@ -41,6 +41,7 @@ Transmitter transmitter (
 
 fifo rx_fifo (
     .clk(clk),
+    .reset(reset),
     .dataIn(receiver.rx_dataOut),
     .writeEn(receiver.rx_doneTick),
     .readEn(rx_fifo_readEn),
