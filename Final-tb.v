@@ -45,31 +45,38 @@ module APB_Protocol_tb;
         
     
         // ++++++++++++++++++++++++++++++++ GPIO ++++++++++++++++++++++++++++++++
-        Psel = 2'b01;
-        transfer = 1'b1;
-        // Write a value to the slave peripheral's memory
-        penable = 1'b1;
+       // Write hABCD1234 to the  memory address 1
         pwrite = 1'b1;
+        transfer = 1'b1;
+        Psel = 2'b01;
         write_paddr = 1'b1;
         write_data = 32'hABCD1234;
-        #30 
 
-        // Read a value from the slave peripheral's memory
+
+        #30;
+        // Read a value from memory address 1
+        Psel = 2'b01;
         pwrite = 1'b0;
+        transfer=1;
         apb_read_paddr = 1'b1;
-        #30; 
+
+
+        #30;
+        //write hAAA into memory address 2
+        Psel=1;
+        transfer =1;
         pwrite = 1'b1;
         write_paddr = 2'b10;
         write_data = 32'hAAA;
-        #30;
+
+        #40;
+        // Read a value from memory address 2
+        Psel=1;
+        transfer=1;
         pwrite=1'b0;
         apb_read_paddr = 2'b10;
-        #30;
-        Psel = 1'b0;
-        #30
-        penable = 1'b0;
 
-    
+        #10
         // ++++++++++++++++++++++++++++++++ UART test ++++++++++++++++++++++++++++++++
         Psel = 2'b10;
         transfer = 1'b1;
@@ -160,6 +167,13 @@ module APB_Protocol_tb;
         #13
         penable = 1'b0;
     end
+
+
+    always @(negedge A1.g1.pready) begin
+        transfer =0;
+        Psel=0;
+    end
+
 
     // Clock generator
     always #5 pclk <= ~pclk;
