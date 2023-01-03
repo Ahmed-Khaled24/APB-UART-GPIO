@@ -16,9 +16,13 @@ module APB_Protocol_tb;
     reg rx = 1;
     // Outputs
     wire [31:0] apb_read_data_out;
+    wire PSLVERR,
+    // Know The Type of Error
+    wire [2:0] Error_Identify
+
 
     // Instantiate the APB protocol module
-    APB_Protcol A1 (pclk, penable, pwrite, transfer, Reset, write_paddr, apb_read_paddr, write_data, Psel, apb_read_data_out,rx);
+    APB_Protcol A1 (pclk, penable, pwrite, transfer, Reset, write_paddr, apb_read_paddr, write_data, Psel, apb_read_data_out,rx,PSLVERR,Error_Identify);
 
     // Test vectors
     initial begin

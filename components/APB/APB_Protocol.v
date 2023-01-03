@@ -11,7 +11,10 @@ module APB_Protcol (
     // 1 gpio 2 uart 0 idle
     input [1:0] Psel,
     output [31:0] apb_read_data_out,
-    input rx
+    input rx,
+    output reg PSLVERR,
+    // Know The Type of Error
+    output reg [2:0] Error_Identify
 );
         // coming from Slave 
        reg pready ;
@@ -22,6 +25,7 @@ module APB_Protcol (
        wire [31:0]prdata1,prdata2;
        wire pready1,pready2;
        wire pwrite_slave,penable_slave;
+
 
 always @(Psel or pready1 or prdata1 or pready2 or prdata2 ) begin
     case (Psel)
@@ -41,11 +45,13 @@ always @(Psel or pready1 or prdata1 or pready2 or prdata2 ) begin
     endcase
 end
 
+
        APB_Bridge dut_mas(
         pclk,  penable,  pwrite,  transfer,Reset,Psel,write_paddr,apb_read_paddr,write_data,// From Tb
         pready,prdata,pwrite_slave,penable_slave, //From Slaves
         pwdata,paddr,PSEL1,PSEL2 // Out To Slave
         ,apb_read_data_out // Out To Test bench
+        ,PSLVERR,Error_Identify
        ); 
 
       GPIO g1(  pclk , penable_slave ,pwrite_slave,PSEL1,Reset,pwdata,paddr,pready1,prdata1 );
