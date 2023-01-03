@@ -55,4 +55,4 @@ receiver receiver (
     .s_tick(baud_generator.tick)
 );
 
-endmodule;
+endmodule

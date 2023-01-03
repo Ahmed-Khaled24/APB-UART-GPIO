@@ -16,9 +16,9 @@ module APB_Protocol_tb;
     reg rx = 1;
     // Outputs
     wire [31:0] apb_read_data_out;
-    wire PSLVERR,
+    wire PSLVERR;
     // Know The Type of Error
-    wire [2:0] Error_Identify
+    wire [2:0] Error_Identify;
 
 
     // Instantiate the APB protocol module
@@ -80,96 +80,96 @@ module APB_Protocol_tb;
         pwrite=1'b0;
         apb_read_paddr = 2'b10;
 
-        #10
-        // ++++++++++++++++++++++++++++++++ UART test ++++++++++++++++++++++++++++++++
-        Psel = 2'b10;
-        transfer = 1'b1;
         #10;
+        // ++++++++++++++++++++++++++++++++ UART test ++++++++++++++++++++++++++++++++
+        // Psel = 2'b10;
+        // transfer = 1'b1;
+        // #10;
     
         // Trasmitter
         // push 8 elemnts in tx_fifo, in the next push 
         // fifo is full then PREADY remains 0 till timeout
-        pwrite = 1'b1;
-        for(integer i = 0 ; i < 10 ; i++) begin
-            #10
-            write_data = $urandom % 256; // unsinged random number between 0 and 255
-            penable = 1'b1;
-            #10
-            penable = 1'b0;
-        end
+        // pwrite = 1'b1;
+        // for( integer i = 0 ; i < 10 ; i++) begin
+        //     #10;
+        //     write_data = $urandom % 256; // unsinged random number between 0 and 255
+        //     penable = 1'b1;
+        //     #10;
+        //     penable = 1'b0;
+        // end
 
-        #100
+        // #100;
 
-        // Receiver 
+        // // Receiver 
 
-        // try to read from rx_fifo while it is empty 
-        // PREADY remains 0 till timeout
-        penable = 1;
-        pwrite = 0;
-        #13
-        penable = 0;
+        // // try to read from rx_fifo while it is empty 
+        // // PREADY remains 0 till timeout
+        // penable = 1;
+        // pwrite = 0;
+        // #13
+        // penable = 0;
 
-        #30
+        // #30;
 
-        // receive data then try to read from rx_fifo 
-        // PREADY is 1 while rx_fifo is not empty
-        // first byte
-        rx = 0; // start bit
-        #104166
-        rx = 1;
-        #104166
-        rx = 0;
-        #104166
-        rx = 1;
-        #104166
-        rx = 0;
-        #104166
-        rx = 1;
-        #104166
-        rx = 0;
-        #104166
-        rx = 1;
-        #104166
-        rx = 0;
-        #104166
-        rx = 1; // stop bit
-        #104166
-        pwrite = 1'b0;
+        // // receive data then try to read from rx_fifo 
+        // // PREADY is 1 while rx_fifo is not empty
+        // // first byte
+        // rx = 0; // start bit
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 1; // stop bit
+        // #104166
+        // pwrite = 1'b0;
 
-        // second byte
-        rx = 0; // start bit
-        #104166
-        rx = 0;
-        #104166
-        rx = 0;
-        #104166
-        rx = 1;
-        #104166
-        rx = 1;
-        #104166
-        rx = 0;
-        #104166
-        rx = 0;
-        #104166
-        rx = 1;
-        #104166
-        rx = 1;
-        #104166
-        rx = 1; // stop bit
-        #104166
+        // // second byte
+        // rx = 0; // start bit
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 0;
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 1;
+        // #104166
+        // rx = 1; // stop bit
+        // #104166
 
-        pwrite = 1'b0;
-        penable = 1'b1;
-        #13
-        penable = 1'b0;
-        #100
-        penable = 1'b1;
-        #13
-        penable = 1'b0;
-        #100
-        penable = 1'b1;
-        #13
-        penable = 1'b0;
+        // pwrite = 1'b0;
+        // penable = 1'b1;
+        // #13
+        // penable = 1'b0;
+        // #100
+        // penable = 1'b1;
+        // #13
+        // penable = 1'b0;
+        // #100
+        // penable = 1'b1;
+        // #13
+        // penable = 1'b0;
     end
 
 

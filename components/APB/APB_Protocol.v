@@ -12,9 +12,9 @@ module APB_Protcol (
     input [1:0] Psel,
     output [31:0] apb_read_data_out,
     input rx,
-    output reg PSLVERR,
+    output  PSLVERR,
     // Know The Type of Error
-    output reg [2:0] Error_Identify
+    output  [2:0] Error_Identify
 );
         // coming from Slave 
        reg pready ;
