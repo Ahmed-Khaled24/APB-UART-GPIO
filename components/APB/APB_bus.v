@@ -123,17 +123,17 @@ always @(*) begin
     end
     // Check if Write or Read Not Correct
     if (CurrentState == SETUP) begin
-                        if (pwrite_Master != pwrite) begin
-                            Error_Identify_Check <= Error_Identify_Check || Invalid_PWrite ;
-                        end
-                        else begin
-                            if (pwrite && (paddr != write_paddr_Master || pwdata != write_data_Master)) begin
-                                Error_Identify_Check <= Error_Identify_Check || Invalid_Addr ;
-                            end
-                            else if(!pwrite && (paddr != read_paddr_Master)) begin
-                                Error_Identify_Check <= Error_Identify_Check || Invalid_Addr ;
-                            end
-                        end       
+        if (pwrite_Master != pwrite) begin
+            Error_Identify_Check <= Error_Identify_Check || Invalid_PWrite ;
+        end
+        else begin
+            if (pwrite && (paddr != write_paddr_Master || pwdata != write_data_Master)) begin
+                // Error_Identify_Check <= Error_Identify_Check || Invalid_Addr ;
+            end
+            else if(!pwrite && (paddr != read_paddr_Master)) begin
+                Error_Identify_Check <= Error_Identify_Check || Invalid_Addr ;
+            end
+        end       
     end
 
     if (Error_Identify_Check != 0) begin
